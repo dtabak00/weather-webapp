@@ -1,4 +1,5 @@
 import './style.css';
+import { config } from './package.json';
 import skycons from 'skycons';
 
 const Skycons = skycons(window);
@@ -9,6 +10,11 @@ const temperatureDegree = $query('.temperature-degree');
 const locationTimezone = $query('.location-timezone');
 const temperatureSection = $query('.temperature');
 const temperatureSpan = $query('.temperature span');
+
+const TemperatureUnit = {
+  Celsius: 'celsius',
+  Fahrenheit: 'fahrenheit'
+};
 
 const promisfy = (fn, ctx) => () => new Promise((resolve, reject) => fn.call(ctx, resolve, reject));
 const getCurrentPosition = promisfy(navigator.geolocation.getCurrentPosition, navigator.geolocation);
@@ -27,18 +33,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function fetchWeatherInfo(position) {
   const { latitude: lat, longitude: long } = position.coords;
-  const proxy = 'https://cors-anywhere.herokuapp.com/'; // Get around the cors-issue (localhost)
-  const api = `${proxy}https://api.darksky.net/forecast/91cec39d0f1e57c746c1a0a806aa1f1a/${lat},${long}`; // API call url
+  const url = `${config.corsProxy}/${config.apiUrl}/${lat},${long}`; // API call url
 
   // Makes http request that fetches the response from a url
-  return fetch(api).then(response => response.json());
+  return fetch(url).then(response => response.json());
 }
 
 function setDomElementValues(data) {
   const { temperature, summary, icon } = data.currently;
 
   // Set DOM Element values with the data from the API
-  temperatureDegree.textContent = calculateCelsius(temperature);
+  Object.assign(temperatureDegree.dataset, {
+    [TemperatureUnit.Celsius]: calculateCelsius(temperature),
+    [TemperatureUnit.Fahrenheit]: calculateFahrenheit(temperature)
+  });
+  toggleTemperatureUnit();
+
   temperatureDescription.textContent = summary;
   locationTimezone.textContent = data.timezone;
   setIcons(icon, document.querySelector('.icon'));
@@ -56,15 +66,18 @@ function setIcons(icon, iconId) {
   return skycons.set(iconId, Skycons[currentIcon]);
 }
 
-temperatureSection.addEventListener('click', () => {
-  if (temperatureSpan.textContent === '°C') {
-    temperatureDegree.textContent = calculateFahrenheit(parseFloat(temperatureDegree.textContent));
+temperatureSection.addEventListener('click', toggleTemperatureUnit);
+
+function toggleTemperatureUnit() {
+  if (temperatureDegree.dataset.current === TemperatureUnit.Celsius) {
+    temperatureDegree.dataset.current = TemperatureUnit.Fahrenheit;
     temperatureSpan.textContent = '°F';
   } else {
-    temperatureDegree.textContent = calculateCelsius(parseFloat(temperatureDegree.textContent));
+    temperatureDegree.dataset.current = TemperatureUnit.Celsius;
     temperatureSpan.textContent = '°C';
   }
-});
+  temperatureDegree.textContent = temperatureDegree.dataset[temperatureDegree.dataset.current];
+}
 
 function calculateCelsius(fahrenheit) {
   return ((fahrenheit - 32) * 5 / 9).toFixed(2);

@@ -12,6 +12,10 @@
     "predeploy": "npm run build",
     "deploy": "surge ./dist https://clearweather.surge.sh"
   },
+  "config": {
+    "corsProxy": "https://cors-anywhere.herokuapp.com",
+    "apiUrl": "https://api.darksky.net/forecast/91cec39d0f1e57c746c1a0a806aa1f1a"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/dtabak00/weather-webapp.git"
