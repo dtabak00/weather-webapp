@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "build": "poi --prod",
-    "dev": "poi --serve"
+    "dev": "poi --serve",
+    "predeploy": "npm run build",
+    "deploy": "surge ./dist https://clearweather.surge.sh"
   },
   "repository": {
     "type": "git",
@@ -29,7 +31,8 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "poi": "^12.6.10"
+    "poi": "^12.6.10",
+    "surge": "^0.21.3"
   },
   "dependencies": {
     "skycons": "^1.0.0"
