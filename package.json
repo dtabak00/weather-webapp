@@ -1,0 +1,30 @@
+{
+  "name": "weather-webapp",
+  "version": "1.0.0",
+  "description": "Simple weather web application made with pure JavaScript and Skycons.js library. Uses geolocation which needs to be allowed via website notification.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dtabak00/weather-webapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dtabak00/weather-webapp/issues"
+  },
+  "homepage": "https://github.com/dtabak00/weather-webapp#readme",
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-semistandard": "^13.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0"
+  }
+}
