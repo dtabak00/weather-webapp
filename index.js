@@ -1,5 +1,7 @@
-/* global Skycons */
+import './style.css';
+import skycons from 'skycons';
 
+const Skycons = skycons(window);
 const $query = (selector, ctx = document) => ctx.querySelector(selector);
 
 const temperatureDescription = $query('.temperature-description');
@@ -45,7 +47,6 @@ function setDomElementValues(data) {
 function setIcons(icon, iconId) {
   // Declare and initialize the skycons class
   const skycons = new Skycons({ color: 'white' });
-
   // Per instructions on https://darkskyapp.github.io/skycons/
   // We must capitalize all letters and replace all "-" with "_"
   const currentIcon = icon.replace(/-/g, '_').toUpperCase();
@@ -66,7 +67,7 @@ temperatureSection.addEventListener('click', () => {
 });
 
 function calculateCelsius(fahrenheit) {
-  return ((fahrenheit - 32) * 5/9).toFixed(2);
+  return ((fahrenheit - 32) * 5 / 9).toFixed(2);
 }
 
 function calculateFahrenheit(celsius) {
