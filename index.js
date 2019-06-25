@@ -16,6 +16,9 @@ const TemperatureUnit = {
   Fahrenheit: 'fahrenheit'
 };
 
+const snakecase = str => str.replace(/-/g, '_');
+const capitalize = str => str.toUpperCase();
+
 const promisfy = (fn, ctx) => () => new Promise((resolve, reject) => fn.call(ctx, resolve, reject));
 const getCurrentPosition = promisfy(navigator.geolocation.getCurrentPosition, navigator.geolocation);
 
@@ -33,9 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function fetchWeatherInfo(position) {
   const { latitude: lat, longitude: long } = position.coords;
-  const url = `${config.corsProxy}/${config.apiUrl}/${lat},${long}`; // API call url
-
-  // Makes http request that fetches the response from a url
+  const url = `${config.corsProxy}/${config.apiUrl}/${lat},${long}`;
   return fetch(url).then(response => response.json());
 }
 
@@ -55,14 +56,9 @@ function setDomElementValues(data) {
 }
 
 function setIcons(icon, iconId) {
-  // Declare and initialize the skycons class
   const skycons = new Skycons({ color: 'white' });
-  // Per instructions on https://darkskyapp.github.io/skycons/
-  // We must capitalize all letters and replace all "-" with "_"
-  const currentIcon = icon.replace(/-/g, '_').toUpperCase();
-  // Start animation
+  const currentIcon = capitalize(snakecase(icon));
   skycons.play();
-
   return skycons.set(iconId, Skycons[currentIcon]);
 }
 
