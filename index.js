@@ -49,6 +49,7 @@ function setDomElementValues(data) {
     [TemperatureUnit.Fahrenheit]: calculateFahrenheit(temperature)
   });
   toggleTemperatureUnit();
+  temperatureSection.style.opacity = 1;
 
   temperatureDescription.textContent = summary;
   locationTimezone.textContent = data.timezone;
