@@ -35,8 +35,8 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "poi": "^12.6.10",
-    "surge": "^0.21.3"
+    "poi": "^12.10.3",
+    "surge": "^0.21.7"
   },
   "dependencies": {
     "skycons": "^1.0.0",
